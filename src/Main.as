@@ -1,6 +1,6 @@
 package
 {
-	import core.EventManager;
+	import core.GameManager;
 	import core.LayoutManager;
 	import core.TimerManager;
 	import core.base.Component;
@@ -9,8 +9,6 @@ package
 	import core.utils.Layout;
 	import flash.display.BlendMode;
 	import flash.display.Sprite;
-	import flash.display.StageAlign;
-	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import test.TComponent;
 	import test.TContainer;
@@ -31,10 +29,8 @@ package
 		private function init(e:Event = null):void 
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
-			stage.scaleMode = StageScaleMode.NO_SCALE;
-			stage.align = StageAlign.TOP_LEFT;
 			
-			EventManager.setStage(stage);
+			GameManager.initGame(stage);
 			// entry point
 			TimerManager.addTimerListener(onTimer)
 			Lred = LayoutManager.addLayout();

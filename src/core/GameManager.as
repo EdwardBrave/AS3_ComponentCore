@@ -5,6 +5,7 @@ package core
 	import core.utils.Layout;
 	import core.packs.EntityObject;
 	import flash.display.DisplayObject;
+	import flash.display.Stage;
 	/**
 	 * ...
 	 * @author EdwardBrave
@@ -12,6 +13,11 @@ package core
 	public class GameManager 
 	{
 		private static var _currentRoom:int;
+		
+		public static function initGame(stage:Stage):void
+		{
+			EventManager.setStage(stage);
+		}
 		
 		public static function get currentRoom():int
 		{

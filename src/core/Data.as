@@ -11,11 +11,18 @@ package core
 			id: {
 				fields:{
 					{   //entity = type +"_"+ entityID +"-"+ uID 
-						entityName: RoomObject;
+						entityName: EntityObject;
 					}
 				}
 			}
 		}*/
+		
+		public static var windows:Object = new Array();
+		/*
+			windowName: EntityObject;
+			windowName: EntityObject;
+			windowName: EntityObject;
+		*/
 		
 		public static var entities:Array = new Array();
 		/*{

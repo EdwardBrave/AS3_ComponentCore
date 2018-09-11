@@ -2,6 +2,7 @@ package core
 {
 	import core.base.EntityManager;
 	import core.base.IComponent;
+	import core.base.WindowManager;
 	import core.utils.Layout;
 	import core.packs.EntityObject;
 	import flash.display.DisplayObject;
@@ -17,12 +18,13 @@ package core
 		public static function initGame(stage:Stage):void
 		{
 			EventManager.setStage(stage);
+			WindowManager.showWindow(null);
 		}
 		
 		public static function get currentRoom():int
 		{
 			return _currentRoom;
-		}  
+		}
 		
 		public static function loadGameRoom(roomID:uint,startOnLoad:Boolean = true):void
 		{
@@ -51,16 +53,16 @@ package core
 					var entity:EntityObject = gameRoom.fields[field][entityName];
 					var newEntity:IComponent = EntityManager.getEntity(entityName);
 					newEntity.refreshSettings(entity.settings);
-					newEntity.x = entity.x;
-					newEntity.y = entity.y;
-					layout.addChild(newEntity);
+					(newEntity as DisplayObject).x = entity.x;
+					(newEntity as DisplayObject).y = entity.y;
+					layout.addChild(newEntity as DisplayObject);
 				}
 			}
 		}
 		
 		public static function refreshMemory():void
 		{
-			
+			EntityManager.refreshMemory();
 		}
 		
 	}

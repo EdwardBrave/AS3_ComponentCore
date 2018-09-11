@@ -33,12 +33,12 @@ package core.base
 			
 		}
 		
-		public function getParent():*
+		public final function getParent():*
 		{
 			return _parent;
 		}
 		
-		public function setParent(container:ComponentList):void
+		public final function setParent(container:ComponentList):void
 		{
 			if(_parent != container){
 				disconnect();

@@ -1,10 +1,9 @@
 package core.base 
 {
 	import core.Data;
-	import core.packs.PrototipeObject;
+	import core.packs.PrototypeObject;
 	import core.packs.EntityObject;
 	import flash.display.DisplayObject;
-	import flash.utils.getQualifiedClassName;
 	import flash.utils.getDefinitionByName;
 	/**
 	 * ...
@@ -19,7 +18,7 @@ package core.base
 			if (!isChild && _entityList[name])
 				return _entityList[name];
 			
-			var buildTree:PrototipeObject = Data.entities[data.sID];
+			var buildTree:PrototypeObject;
 			switch(data.sysType){
 				case EntityObject.ENTITY:
 					buildTree = Data.entities[data.sID];
@@ -41,8 +40,8 @@ package core.base
 			entity.refreshSettings(buildTree.settings);
 			if (!isChild)
 				_entityList[name] = entity;
-			if (uID >= 0)
-				entity.uID = uID;
+			if (data.uID >= 0)
+				entity.uID = data.uID;
 			
 			if (entity is ComponentList){
 				for each (var componentsList:Object in [buildTree.components, buildTree.children])
@@ -51,14 +50,22 @@ package core.base
 						var component:EntityObject = componentsList[componentName];
 						var newComponent:IComponent = loadEntity(componentName, component, true);
 						if (newComponent is DisplayObject){
-							newComponent.x = component.x;
-							newComponent.y = component.y;
+							(newComponent as DisplayObject).x = component.x;
+							(newComponent as DisplayObject).y = component.y;
 						}
 						newComponent.refreshSettings(component.settings);
 						(entity as ComponentList).addComponent(newComponent);
 					}
 			}
 			return entity;
+		}
+		
+		public static function refreshMemory():void
+		{
+			for each(var entity:IComponent in _entityList){
+				if (entity.getParent() == null)
+					removeEntity(entity);
+			}
 		}
 		
 		public static function getEntity(name:String):IComponent
@@ -82,7 +89,8 @@ package core.base
 				name = (oldParent as ComponentList).getComponentName(entity);
 				(oldParent as ComponentList).disconnectComponent(entity);
 			}
-			newParent.addComponent(entity,name);
+			if (newParent)
+				newParent.addComponent(entity,name);
 		}
 		
 		public static function removeEntityByName(name:String):void 

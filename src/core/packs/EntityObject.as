@@ -6,11 +6,11 @@ package core.packs
 	 */
 	public class EntityObject
 	{
-		public static var LAYOUT = "layout";
-		public static var ENTITY = "entity";
-		public static var COMPONENT = "component";
-		public static var GUI_ENTITY = "guiEntity";
-		public static var GUI_COMPONENT = "guiComponent";
+		public static const LAYOUT:String = "layout";
+		public static const ENTITY:String = "entity";
+		public static const COMPONENT:String = "component";
+		public static const GUI_ENTITY:String = "guiEntity";
+		public static const GUI_COMPONENT:String = "guiComponent";
 		
 		public var sID: uint;
 		public var uID: int;
@@ -19,14 +19,14 @@ package core.packs
 		public var y: Number;
 		public var settings:Object;
 		
-		public function EntityObject(sID: uint, sysType: String, uID: int = -1, x:Number = 0, y:Number = 0, settings:Object = {}); 
+		public function EntityObject(sID: uint, sysType: String, uID: int = -1, x:Number = 0, y:Number = 0, settings:Object = null) 
 		{
 			this.sID = sID;
 			this.uID = uID;
 			this.sysType = sysType;
 			this.x = x;
 			this.y = y;
-			this.settings = settings;
+			this.settings = settings || {};
 			
 		}
 		

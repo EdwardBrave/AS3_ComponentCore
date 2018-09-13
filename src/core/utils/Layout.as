@@ -124,8 +124,9 @@ package core.utils
 		public function destruct():void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
-			disconnectBase();
+			removeEventListener(Event.REMOVED_FROM_STAGE, disconnectBase);
 			removeEventListener(Event.ADDED_TO_STAGE, connectBase);
+			disconnect();
 			graphics.clear();
 			var lenght:int = numChildren;
 			var sprite:DisplayObject;
@@ -134,7 +135,8 @@ package core.utils
 				sprite = getChildAt(index);
 				if (sprite is Layout)
 					(sprite as Layout).destruct();
-				removeChild(sprite);
+				else
+					removeChild(sprite);
 			}
 			if (parent)
 				parent.removeChild(this);

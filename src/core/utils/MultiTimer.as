@@ -16,19 +16,21 @@ package core.utils
 			super(delay,repeatCount);
 			functions = new FunctionList();
 			addEventListener(TimerEvent.TIMER, onTimer);
+			addEventListener(TimerEvent.TIMER_COMPLETE, erase);
 			this.start();
 		}
 		
-		public function onTimer(e:TimerEvent):void
+		private function onTimer(e:TimerEvent):void
 		{
-			for each(var func:Function in functions.functions)
+			for each(var func:Function in functions.functions.slice())
 				func();
 		}
 		
-		public function erase():void
+		public function erase(e:TimerEvent = null):void
 		{
 			this.stop();
 			removeEventListener(TimerEvent.TIMER, onTimer);
+			removeEventListener(TimerEvent.TIMER_COMPLETE, erase);
 			functions.erase();
 		}
 		

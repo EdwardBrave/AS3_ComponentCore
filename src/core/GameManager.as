@@ -18,7 +18,6 @@ package core
 		public static function initGame(stage:Stage):void
 		{
 			EventManager.setStage(stage);
-			WindowManager.showWindow(null);
 		}
 		
 		public static function get currentRoom():int

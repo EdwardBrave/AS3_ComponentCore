@@ -21,25 +21,26 @@ package core.utils
 			_functions = new Vector.<Function>(length,fixed);
 		}
 		
-		public function addFunc(func:Function,position:uint = undefined):Boolean{
+		public function addFunc(func:Function,position:int = -1):Boolean{
 			if (_functions.indexOf(func) == -1){
-				position = (position < _functions.length) ? position: _functions.length;
+				position = (0 <= position && position < _functions.length) ? position: _functions.length;
 				_functions.splice(position, 0, func);
 				return true;
 			}
 			return false;
 		}
 		
-		public function forceAddFunc(func:Function,position:uint = undefined):Boolean{
+		public function forceAddFunc(func:Function,position:int = -1):Boolean{
 			if (_functions.indexOf(func) != -1)
 				removeFunc(func);
-			position = (position < _functions.length) ? position: _functions.length;
+			position = (0 <= position && position < _functions.length) ? position: _functions.length;
 			_functions.splice(position, 0, func);
 			return true;
 		}
 		
 		public function SetFuncPos(func:Function,position:uint):Boolean{
 			if (_functions.indexOf(func) != -1){
+				removeFunc(func);
 				position = (position < _functions.length) ? position: _functions.length;
 				_functions.splice(position, 0, func);
 				return true;

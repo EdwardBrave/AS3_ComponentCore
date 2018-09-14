@@ -6,7 +6,7 @@ package core.base
 	 * ...
 	 * @author EdwardBrave
 	 */
-	internal class ComponentList extends Layout 
+	public class ComponentList extends Layout 
 	{
 		protected var _components:Object;
 		
@@ -19,7 +19,7 @@ package core.base
 		protected function generateName(item:*):String
 		{
 			if (!item)
-				throw new ("undefined has no properties.", 1010);
+				throw new Error("undefined has no properties.", 1010);
 			var name:String = getQualifiedClassName(item);
 			name = name.substring(name.lastIndexOf(":") + 1);
 			var counter:int = -1;
@@ -34,8 +34,10 @@ package core.base
 			return name;
 		}
 		
-		public final function addComponent(component:IComponent, name:String = ""):*
+		public final function addComponent(component:IComponent, name:String = ""):ComponentList
 		{
+			if (!component)
+				return this;
 			if (getComponentName(component)){
 				if (name)
 					return setComponentName(component, name);
@@ -51,16 +53,14 @@ package core.base
 			return this;
 		}
 		
-		public final function setComponentName(component:IComponent, name:String):*
+		public final function setComponentName(component:IComponent, name:String):ComponentList
 		{
 			if (_components[name] === component)
 				return this;
 			var oldName:String = getComponentName(component);
-			if (!oldName)
-				throw new Error("\"component\" is undefined and has no properties.", 1010);
+			if (!oldName || !name)
+				return this;
 			delete _components[oldName];
-			if (!name)
-				throw new Error("\"name\" is undefined and has no properties.", 1010);
 			if (_components[name])
 				throw new Error("Component \"" + name+"\" is already defined.", 1038);
 			_components[name] = component;
@@ -91,7 +91,7 @@ package core.base
 			return outComponent;
 		}
 		
-		public final function disconnectComponent(component:IComponent):IComponent
+		public final function disconnectComponent(component:IComponent):String
 		{
 			var name:String = getComponentName(component);
 			if (name)
@@ -99,10 +99,10 @@ package core.base
 				component.setParent(null);
 				delete _components[name];
 			}
-			return component;
+			return name;
 		}
 		
-		public final function removeComponentByName(name:String):*
+		public final function removeComponentByName(name:String):ComponentList
 		{
 			if (_components[name])
 			{
@@ -112,7 +112,7 @@ package core.base
 			return this;
 		}
 		
-		public final function removeComponent(component:IComponent):*
+		public final function removeComponent(component:IComponent):ComponentList
 		{
 			var name:String = getComponentName(component);
 			if (name)

@@ -30,7 +30,12 @@ package core.base
 		
 		public function refreshSettings(settings:Object):void
 		{
-			
+			if (settings != null){
+				if (!_settings)
+					_settings = new Object();
+				for( var key:String in settings)
+					_settings[key] = settings[key];
+			}
 		}
 		
 		public final function getParent():*
@@ -41,7 +46,8 @@ package core.base
 		public final function setParent(container:ComponentList):void
 		{
 			if(_parent != container){
-				disconnect();
+				if (_parent)
+					disconnect();
 				_parent = container;
 				if (_parent)
 					connect();

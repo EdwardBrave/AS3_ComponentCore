@@ -26,33 +26,17 @@ package core.utils
 			connectBase();
 		}
 		
-		public function connectBase(e:Event = null):void
+		protected function connectBase(e:Event = null):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, connectBase);
-			var lenght:int = numChildren;
-			var sprite:DisplayObject;
 			connect();
-			for (var index:int = 0; index < lenght; index++)
-			{
-				sprite = getChildAt(index);
-				if (sprite is Layout)
-					(sprite as Layout).connectBase();
-			}
 			addEventListener(Event.REMOVED_FROM_STAGE, disconnectBase);
 		}
 		
-		public function disconnectBase(e:Event = null):void
+		protected function disconnectBase(e:Event = null):void
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, disconnectBase);
-			var lenght:int = numChildren;
-			var sprite:DisplayObject;
 			disconnect();
-			for (var index:int = 0; index < lenght; index++)
-			{
-				sprite = getChildAt(index);
-				if (sprite is Layout)
-					(sprite as Layout).disconnectBase();
-			}
 			addEventListener(Event.ADDED_TO_STAGE, connectBase);
 		}
 		

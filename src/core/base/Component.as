@@ -25,14 +25,12 @@ package core.base
 		
 		public function Component() 
 		{
-			
+			_settings = new Object();
 		}
 		
 		public function refreshSettings(settings:Object):void
 		{
 			if (settings != null){
-				if (!_settings)
-					_settings = new Object();
 				for( var key:String in settings)
 					_settings[key] = settings[key];
 			}

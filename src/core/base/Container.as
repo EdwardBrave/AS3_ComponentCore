@@ -32,47 +32,30 @@ package core.base
 		
 		public function Container():void 
 		{
+			_settings = new Object();
 			super();
 		}
 		
-		override public final function connectBase(e:Event = null):void
+		override protected final function connectBase(e:Event = null):void
 		{
-			connectToEvents();
-			connect();
-			for each( var component:IComponent in _components)
-				if (component is Container)
-					(component as Container).connectBase();
-				else
-					component.connect();
-		}
-		
-		override public final function disconnectBase(e:Event = null):void
-		{
-			disconnectFromEvents();
-			disconnect();
-			for each( var component:IComponent in _components)
-				if (component is Container)
-					(component as Container).disconnectBase();
-				else
-					component.disconnect();
-		}
-		
-		private final function connectToEvents():void
-		{
+			super.connectBase();
 			if (!(parent is Container)){
 				EventManager.addEventListener(EventManager.ENTER_FRAME, updateBase);
 				TimerManager.addTimerListener(secondTickBase);
 			}
-			removeEventListener(Event.ADDED_TO_STAGE, connectBase);
-			addEventListener(Event.REMOVED_FROM_STAGE, disconnectBase);
+			for each( var component:IComponent in _components)
+				if (!(component is Container))
+					component.connect();
 		}
 		
-		private final function disconnectFromEvents():void
+		override protected final function disconnectBase(e:Event = null):void
 		{
+			super.disconnectBase();
 			EventManager.removeEventListener(EventManager.ENTER_FRAME, updateBase);
 			TimerManager.removeTimerListener(secondTickBase);
-			removeEventListener(Event.REMOVED_FROM_STAGE, disconnectBase);
-			addEventListener(Event.ADDED_TO_STAGE, connectBase);
+			for each( var component:IComponent in _components)
+				if (!(component is Container))
+					component.disconnect();
 		}
 		
 		internal final function updateBase():void
@@ -100,8 +83,6 @@ package core.base
 		public function refreshSettings(settings:Object):void
 		{
 			if (settings != null){
-				if (!_settings)
-					_settings = new Object();
 				for( var key:String in settings)
 					_settings[key] = settings[key];
 			}
@@ -129,12 +110,12 @@ package core.base
 			
 		}
 		
-		public function update():void
+		public function preUpdate():void
 		{
 			
 		}
 		
-		public function preUpdate():void
+		public function update():void
 		{
 			
 		}

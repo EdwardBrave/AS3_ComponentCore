@@ -8,16 +8,19 @@ package core
 	{
 		public static var gameRooms:Array = new Array();
 		/*{
-			id: {
-				fields:{
-					{   //entity = type +"_"+ entityID +"-"+ uID 
+			roomId: {
+				fields:[
+					{   //entityName = type +"_"+ entityID +"-"+ uID 
 						entityName: EntityObject;
 					}
-				}
+					{   //entityName = type +"_"+ entityID +"-"+ uID 
+						entityName: EntityObject;
+					}
+				]
 			}
 		}*/
 		
-		public static var windows:Object = new Array();
+		public static var windows:Object = new Object();
 		/*
 			windowName: EntityObject;
 			windowName: EntityObject;
@@ -31,12 +34,10 @@ package core
 		}*/
 		
 		public static var components:Array = new Array();
-		//{
-			//componentID:{
-				//classType: String,
-				//settings: {}
-			//}
-		//}
+		/*{
+			componentID: PrototipeObject
+			componentID: PrototipeObject
+		}*/
 		
 		public static var guiEntities:Array = new Array();
 		/*{
@@ -45,12 +46,10 @@ package core
 		}*/
 		
 		public static var guiComponents:Array = new Array();
-		//{
-			//componentID:{
-				//classType: String,
-				//settings: {}
-			//}
-		//}
+		/*{
+			componentID: PrototipeObject
+			componentID: PrototipeObject
+		}*/
 		
 		public static var graphics:Object = new Object();
 		

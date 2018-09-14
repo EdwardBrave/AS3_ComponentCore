@@ -27,12 +27,13 @@ package core.base
 		
 		public static function showWindowByName(name:String):IComponent
 		{
-			return showWindow(loadWindow(name));
+			_windowList[name] = loadWindow(name);
+			return showWindow(_windowList[name]);
 		}
 		
 		public static function showWindow(entity:IComponent):IComponent
 		{
-			if (!entity || !EntityManager.getEntityName(entity))
+ 			if (!entity || !EntityManager.getEntityName(entity))
 				return null;
 			if (!windowLayout)
 				windowLayout = LayoutManager.addLayout();
@@ -46,8 +47,11 @@ package core.base
 		public static function closeWindowByName(name:String):Boolean
 		{
 			var entity:IComponent = EntityManager.getEntity(name);
-			if (entity)
-				return closeWindow(entity);
+			if (entity && entity.getParent() == windowLayout){
+				windowLayout.removeChild(entity as DisplayObject);
+				delete _windowList[name];
+				return true;
+			}
 			return false;
 		}
 		
@@ -55,9 +59,18 @@ package core.base
 		{
 			if (entity && entity.getParent() == windowLayout){
 				windowLayout.removeChild(entity as DisplayObject);
+				delete _windowList[EntityManager.getEntityName(entity)];
 				return true;
 			}
 			return false;
+		}
+		
+		public static function closeAll():void
+		{
+			for (var window:String in _windowList)
+				closeWindowByName(window);
+			for (var trash:String in _windowList)
+				delete _windowList[trash];
 		}
 		
 	}

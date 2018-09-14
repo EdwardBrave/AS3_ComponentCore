@@ -28,7 +28,7 @@ package core
 		public static function loadGameRoom(roomID:uint,startOnLoad:Boolean = true):void
 		{
 			var gameRoom:Object = Data.gameRooms[roomID];
-			for (var field:int = 0; field < gameRoom.fields.lenght; field++)
+			for (var field:int = 0; field < gameRoom.fields.length; field++)
 			{
 				for (var entityName:String in gameRoom.fields[field])
 					EntityManager.loadEntity(entityName, gameRoom.fields[field][entityName]);
@@ -39,9 +39,10 @@ package core
 		
 		public static function startGameRoom(roomID:int):void
 		{
+			_currentRoom = roomID;
 			var gameRoom:Object = Data.gameRooms[roomID];
 			LayoutManager.clearLayouts();
-			for (var field:int = 0; field < gameRoom.fields.lenght; field++)
+			for (var field:int = 0; field < gameRoom.fields.length; field++)
 			{
 				var layout:Layout = LayoutManager.getLayout(field);
 				if (!layout)
@@ -57,10 +58,12 @@ package core
 					layout.addChild(newEntity as DisplayObject);
 				}
 			}
+			refreshMemory();
 		}
 		
 		public static function refreshMemory():void
 		{
+			WindowManager.closeAll();
 			EntityManager.refreshMemory();
 		}
 		

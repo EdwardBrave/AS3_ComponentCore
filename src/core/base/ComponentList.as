@@ -6,7 +6,7 @@ package core.base
 	 * ...
 	 * @author EdwardBrave
 	 */
-	public class ComponentList extends Layout 
+	internal class ComponentList extends Layout 
 	{
 		protected var _components:Object;
 		

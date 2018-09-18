@@ -8,6 +8,8 @@ package assets.components
 	{
 		
 		TestComponent;
+		PlayerController;
+		Movement;
 		
 	}
 

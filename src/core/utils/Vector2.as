@@ -1,22 +1,44 @@
 package core.utils 
 {
+	import flash.geom.Point;
 	/**
 	 * ...
 	 * @author EdwardBrave
 	 */
 	public class Vector2 
 	{
-		public static const UP:Vector2 = new Vector2(0,-1); 
-		public static const DOWN:Vector2 = new Vector2(0,1); 
-		public static const LEFT:Vector2 = new Vector2(-1,0); 
-		public static const RIGHT:Vector2 = new Vector2(1,0);
-		public static const NULL:Vector2 = new Vector2(0,0);
+		public static function get UP():Vector2
+		{
+			return new Vector2(0, -1);
+		}  
+		public static function get DOWN():Vector2
+		{
+			return new Vector2(0, 1);
+		} 
+		public static function get LEFT():Vector2
+		{
+			return new Vector2(-1, 0);
+		} 
+		public static function get RIGHT():Vector2
+		{
+			return new Vector2(1, 0);
+		} 
+		public static function get NULL():Vector2
+		{
+			return new Vector2(0, 0);
+		} 
+		
 		public var x:Number;
 		public var y:Number;
-		public function Vector2(x:Number, y:Number):void
+		public function Vector2(x:Number = 0, y:Number = 0):void
 		{
 			this.x = x;
 			this.y = y;
+		}
+		
+		public function clone():Vector2
+		{
+			return new Vector2(x,y);
 		}
 		
 		public static function normaliseAngle(newAngle:Number):Number
@@ -62,6 +84,11 @@ package core.utils
 		public function get isNull():Boolean
 		{
 			return (x == 0 && y == 0);
+		}
+		
+		public static function getVectorByPoints(start:Point, end:Point):Vector2
+		{
+			return new Vector2(end.x - start.x, end.y - start.y);
 		}
 		
 		public function addAngle(newAngle:Number):void

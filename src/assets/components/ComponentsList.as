@@ -10,6 +10,10 @@ package assets.components
 		TestComponent;
 		PlayerController;
 		Movement;
+		Collider;
+		Armed;
+		Health;
+		RangeCollider;
 		
 	}
 

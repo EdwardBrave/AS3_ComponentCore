@@ -15,9 +15,10 @@ package core
 	{
 		private static var _currentRoom:int;
 		
-		public static function initGame(stage:Stage):void
+		public static function initGame(stage:Stage,collisionList:Object):void
 		{
 			EventManager.setStage(stage);
+			CollisionManager.init(collisionList);
 		}
 		
 		public static function get currentRoom():int

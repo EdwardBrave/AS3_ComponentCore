@@ -22,25 +22,39 @@ package assets.components
 		
 		override public function connect():void 
 		{
-			_parent.addEventListener(MoveEvent.START_MOVE,onStartMove);
+			_parent.addEventListener(MoveEvent.START_MOVE, onStartMove);
+			_parent.addEventListener(MoveEvent.REFLECT,onReflect);
 			if (!_settings.isContinue)
-				_parent.addEventListener(MoveEvent.END_MOVE,onEndMove);
+				_parent.addEventListener(MoveEvent.STOP,onStop);
 		}
 		
 		override public function disconnect():void 
 		{
-			_parent.removeEventListener(MoveEvent.START_MOVE,onStartMove);
-			_parent.removeEventListener(MoveEvent.END_MOVE,onEndMove);
+			_parent.removeEventListener(MoveEvent.START_MOVE, onStartMove);
+			_parent.removeEventListener(MoveEvent.REFLECT,onReflect);
+			_parent.removeEventListener(MoveEvent.STOP,onStop);
 		}
 		
 		private function onStartMove(e:MoveEvent):void
 		{
-			_movement.addVector(e.move);
+			_movement = e.move;
+		
+		}	
+		private function onReflect(e:MoveEvent):void
+		{
+			if (_settings.isContinue){
+				if (e.move.x)
+					_movement.x *= -1;
+				if (e.move.y)
+					_movement.y *= -1;
+			}
+			else 
+				_movement = Vector2.NULL;
 		}
 		
-		private function onEndMove(e:MoveEvent):void
+		private function onStop(e:MoveEvent):void
 		{
-			_movement.addVector(e.move.inverce);
+			_movement = Vector2.NULL;
 		}
 		
 		

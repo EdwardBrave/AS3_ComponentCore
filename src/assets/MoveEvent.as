@@ -13,7 +13,8 @@ package assets
 	//TYPE___________________________________________________________
 	
 		public static const START_MOVE:String = "startMove";
-		public static const END_MOVE:String = "endMove";
+		public static const REFLECT:String = "reflect";
+		public static const STOP:String = "stop";
 		
 		public var move:Vector2;
 		

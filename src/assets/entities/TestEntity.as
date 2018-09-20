@@ -15,6 +15,17 @@ package assets.entities
 			
 		}
 		
+		override public function connect():void 
+		{
+			addEventListener("dead",onDead);
+		}
+		
+		private function onDead(e:*):void
+		{
+			removeEventListener("dead",onDead);
+			destruct();
+		}
+		
 		override public function initGraphics():void 
 		{
 			_settings.color = _settings.color || 0xFF8000;

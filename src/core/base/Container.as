@@ -45,7 +45,7 @@ package core.base
 			}
 			for each( var component:IComponent in _components)
 				if (!(component is Container))
-					component.connect();
+					component.setParent(this);
 		}
 		
 		override protected final function disconnectBase(e:Event = null):void
@@ -55,7 +55,7 @@ package core.base
 			TimerManager.removeTimerListener(secondTickBase);
 			for each( var component:IComponent in _components)
 				if (!(component is Container))
-					component.disconnect();
+					component.setParent(null);
 		}
 		
 		internal final function updateBase():void

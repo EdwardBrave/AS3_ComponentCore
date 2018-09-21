@@ -47,36 +47,50 @@ package assets.components
 		{
 			if (((0xFF - pressedKeys) & _settings.activeKeys & 0x1) && e.keyCode == 87){
 				pressedKeys |= 0x11;
-				_parent.dispatchEvent(new MoveEvent(MoveEvent.START_MOVE,false,false,Vector2.UP));
+				setMoveVector();
 			}
 			else if (((0xFF - pressedKeys) & _settings.activeKeys & 0x2) && e.keyCode == 83){
 				pressedKeys |= 0x22;
-				_parent.dispatchEvent(new MoveEvent(MoveEvent.START_MOVE,false,false,Vector2.DOWN));
+				setMoveVector();
 			}
 			else if (((0xFF - pressedKeys) & _settings.activeKeys & 0x4) && e.keyCode == 65){
 				pressedKeys |= 0x44;
-				_parent.dispatchEvent(new MoveEvent(MoveEvent.START_MOVE,false,false,Vector2.LEFT));
+				setMoveVector();
 			}
 			else if (((0xFF - pressedKeys) & _settings.activeKeys & 0x8) && e.keyCode == 68){
 				pressedKeys |= 0x88;
-				_parent.dispatchEvent(new MoveEvent(MoveEvent.START_MOVE,false,false,Vector2.RIGHT));
+				setMoveVector();
 			}
 			else if (((0xFF - pressedKeys) & _settings.activeKeys & 0x10) && e.keyCode == 38){
 				pressedKeys |= 0x11;
-				_parent.dispatchEvent(new MoveEvent(MoveEvent.START_MOVE,false,false,Vector2.UP));
+				setMoveVector();
 			}
 			else if (((0xFF - pressedKeys) & _settings.activeKeys & 0x20) && e.keyCode == 40){
 				pressedKeys |= 0x22;
-				_parent.dispatchEvent(new MoveEvent(MoveEvent.START_MOVE,false,false,Vector2.DOWN));
+				setMoveVector();
 			}
 			else if (((0xFF - pressedKeys) & _settings.activeKeys & 0x40) && e.keyCode == 37){
 				pressedKeys |= 0x44;
-				_parent.dispatchEvent(new MoveEvent(MoveEvent.START_MOVE,false,false,Vector2.LEFT));
+				setMoveVector();
 			}
 			else if (((0xFF - pressedKeys) & _settings.activeKeys & 0x80) && e.keyCode == 39){
 				pressedKeys |= 0x88;
-				_parent.dispatchEvent(new MoveEvent(MoveEvent.START_MOVE,false,false,Vector2.RIGHT));
+				setMoveVector();
 			}
+		}
+		
+		private function setMoveVector():void
+		{
+			var vector:Vector2 = new Vector2();
+			if (pressedKeys & 0x11)
+				vector.addVector(Vector2.UP);
+			if (pressedKeys & 0x22)
+				vector.addVector(Vector2.DOWN);
+			if (pressedKeys & 0x44)
+				vector.addVector(Vector2.LEFT);
+			if (pressedKeys & 0x88)
+				vector.addVector(Vector2.RIGHT);
+			_parent.dispatchEvent(new MoveEvent(MoveEvent.START_MOVE,false,false,vector));
 		}
 		
 		private function onKeyUp(e:KeyboardEvent):void

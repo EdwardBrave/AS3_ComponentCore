@@ -33,18 +33,22 @@ package core
 			
 			for (var count:int = colliders.length - 1; count >= 0; count--){
 				var currentType:Array = _collisionList[colliders[count].collisionType];
-				var currentCollider:DisplayObject = colliders[count].getParent();
-				if (!currentCollider || !currentType){
+				var currentCollider:Collider = colliders[count];
+				var currentColliderParent:DisplayObject = (currentCollider) ? currentCollider.getParent(): null;
+				if ( !currentType || !currentColliderParent){
 					colliders.removeAt(count);
 					continue;
 				}
 				for (var i:int = count - 1; i >= 0; i-- ){
 					if (currentType.indexOf(colliders[i].collisionType) != -1)
 					{
-						var newCollider:DisplayObject = colliders[i].getParent();
-						if (newCollider && currentCollider.hitTestObject(newCollider)){
-							currentCollider.dispatchEvent(new CollisionEvent(CollisionEvent.COLLISION, false, false, newCollider,colliders[count].collisionType));
-							newCollider.dispatchEvent(new CollisionEvent(CollisionEvent.COLLISION, false, false, currentCollider,colliders[i].collisionType));
+						var newCollider:Collider = colliders[i];
+						var newColliderParent:DisplayObject = (newCollider) ? newCollider.getParent(): null;
+						if (newColliderParent && currentColliderParent.hitTestObject(newColliderParent) && newColliderParent != currentColliderParent){
+							if (colliders.indexOf(newCollider) != -1 && colliders.indexOf(currentCollider) != -1)
+								currentColliderParent.dispatchEvent(new CollisionEvent(CollisionEvent.COLLISION, false, false, newColliderParent,newCollider.collisionType));
+							if (colliders.indexOf(newCollider) != -1 && colliders.indexOf(currentCollider) != -1)
+								newColliderParent.dispatchEvent(new CollisionEvent(CollisionEvent.COLLISION, false, false, currentColliderParent,currentCollider.collisionType));
 						}
 					}
 				}	

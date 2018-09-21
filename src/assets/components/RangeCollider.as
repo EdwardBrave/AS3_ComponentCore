@@ -23,24 +23,24 @@ package assets.components
 				return;
 			var position:Vector2 = Vector2.getVectorByPoints(centerPoint(_parent),centerPoint(e.object));
 			var angle:int = position.angle;
-			if (angle < 45 || angle >= 315){
+			if (angle < 45 || angle >= 315){	
+				angle = 100 + 160 * (centerPoint(_parent).y - (e.object.y - _parent.height / 2) ) / (_parent.height + e.object.height); 
 				_parent.x = e.object.x - _parent.width - 1;
-				angle = 135 + 90 * (centerPoint(_parent).y - e.object.y - _parent.height/2 )/(_parent.height + e.object.height); 
 				_parent.dispatchEvent(new MoveEvent(MoveEvent.START_MOVE,false,false,Vector2.getAngleVector(angle)));
 			}
 			else if (angle < 135){
+				angle = 190 + 160 * (centerPoint(_parent).x - (e.object.x - _parent.width/2) )/(_parent.width + e.object.width); 
 				_parent.y = e.object.y + e.object.height + 1;
-				angle = 45 + 90 * (centerPoint(_parent).x - e.object.x - _parent.width/2 )/(_parent.width + e.object.width); 
 				_parent.dispatchEvent(new MoveEvent(MoveEvent.START_MOVE,false,false,Vector2.getAngleVector(angle)));
 			}
 			else if (angle < 225){
+				angle = 280 + 160 * (1 - (centerPoint(_parent).y - (e.object.y - _parent.height / 2) ) / (_parent.height + e.object.height)); 
 				_parent.x = e.object.x + e.object.width + 1;
-				angle = 315 + 90 * (centerPoint(_parent).y - e.object.y - _parent.height/2 )/(_parent.height + e.object.height); 
 				_parent.dispatchEvent(new MoveEvent(MoveEvent.START_MOVE,false,false,Vector2.getAngleVector(angle)));
 			}
 			else{
+				angle = 10 + 160 * (1 - (centerPoint(_parent).x - (e.object.x - _parent.width/2) )/(_parent.width + e.object.width)); 
 				_parent.y = e.object.y - _parent.height -1;
-				angle = 225 + 90 * (centerPoint(_parent).x - e.object.x - _parent.width/2 )/(_parent.width + e.object.width); 
 				_parent.dispatchEvent(new MoveEvent(MoveEvent.START_MOVE,false,false,Vector2.getAngleVector(angle)));
 			}
 			

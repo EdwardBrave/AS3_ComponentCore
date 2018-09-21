@@ -59,8 +59,8 @@ package core.utils
 		{
 			newAngle = normaliseAngle(newAngle);
 			var rad:Number = (newAngle - 180) * (Math.PI / 180);
-			x = Math.cos( -rad);
-			y = Math.sin( -rad);
+			x = -Math.cos( rad);
+			y = Math.sin( rad);
 		}
 		
 		public function addVector(vector:Vector2):void
@@ -78,7 +78,7 @@ package core.utils
 		{
 			newAngle = normaliseAngle(newAngle);
 			var rad:Number = (newAngle - 180) * (Math.PI / 180);
-			return new Vector2(-Math.cos(rad),-Math.sin(rad));
+			return new Vector2(-Math.cos(rad),Math.sin(rad));
 		}
 		
 		public function get isNull():Boolean
@@ -93,7 +93,20 @@ package core.utils
 		
 		public function addAngle(newAngle:Number):void
 		{
-			this.angle = angle - normaliseAngle(newAngle);
+			newAngle = normaliseAngle(newAngle);
+			if (!x || !y)
+				this.angle = newAngle;
+			else 
+			{
+				if (Math.abs(angle - newAngle) > 180)
+				{
+					if (angle < 180)
+						angle += 360;
+					else
+						newAngle += 360;
+				}
+				this.angle = (angle + normaliseAngle(newAngle))/2;
+			}
 		}
 		
 		public static function getDeltaVector(vector1:Vector2, vector2:Vector2):Vector2

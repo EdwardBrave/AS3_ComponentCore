@@ -11,7 +11,7 @@ package assets.components
 	 */
 	public class Health extends Component 
 	{
-		
+		public static const HP_CHANGED:String = "hitPointsChanged";
 		public function Health() 
 		{
 			super();
@@ -31,7 +31,8 @@ package assets.components
 			setTimeout(function ():void
 			{
 				_parent.dispatchEvent(new Event("dead"));
-			},1);
+			}, 1);
+			_parent.dispatchEvent(new Event(HP_CHANGED));
 		}
 		
 		override public function disconnect():void 

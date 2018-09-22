@@ -3,7 +3,13 @@ package core
 	import assets.CollisionEvent;
 	import assets.components.Collider;
 	import core.EventManager;
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.display.Sprite;
+	import flash.geom.Matrix;
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	/**
 	 * ...
 	 * @author EdwardBrave
@@ -55,11 +61,34 @@ package core
 			}
 		}
 		
-		private static function isIntersects(obj1:DisplayObject, obj2:DisplayObject):Boolean
+		private static function isIntersects(collider1:DisplayObject, collider2:DisplayObject):Boolean
 		{
-			if (!obj1.hitTestObject(obj2))
+			if (!collider1.hitTestObject(collider2))
 				return false; 
-			//obj1.mask(obj2);
+			var coords:Point = collider1.parent.localToGlobal(new Point(collider1.x,collider1.y));
+			var objCoords:Point = collider2.parent.localToGlobal(new Point(collider2.x, collider2.y));
+			objCoords.x -= coords.x;
+			objCoords.y -= coords.y;
+			var container:Sprite = new Sprite();
+			var obj1Data:BitmapData = new BitmapData(collider1.width, collider1.height,true,0x00000000);
+			var obj2Data:BitmapData = new BitmapData(collider2.width, collider2.height,true,0x00000000);
+			obj1Data.draw(collider1);
+			obj2Data.draw(collider2);
+			var obj1:Bitmap = new Bitmap(obj1Data);
+			var obj2:Bitmap = new Bitmap(obj2Data);
+			container.addChild(obj1);
+			obj2.x = objCoords.x;
+			obj2.y = objCoords.y;
+			container.addChild(obj2);
+			container.cacheAsBitmap = true;
+			obj1.cacheAsBitmap = true;
+			obj2.cacheAsBitmap = true;
+			obj1.mask = obj2;
+			var result:BitmapData = new BitmapData(container.width, container.height,true,0x00000000);
+			result.draw(container);
+			var rect:Rectangle = result.getColorBoundsRect(0xFF000000, 0x00000000, false);
+			if (rect.x == 0 && rect.y == 0 && rect.width == 0 && rect.height == 0)
+				return false;
 			return true;
 		}
 		

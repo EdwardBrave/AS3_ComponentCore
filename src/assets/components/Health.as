@@ -3,6 +3,7 @@ package assets.components
 	import assets.DamageEvent;
 	import core.base.Component;
 	import flash.events.Event;
+	import flash.utils.setTimeout;
 	
 	/**
 	 * ...
@@ -27,7 +28,10 @@ package assets.components
 		{
 			_settings.health -= e.damage.damage * ((_settings.isArmored == e.damage.antiArmor) ? 1. : 0.5);
 			if (_settings.health <= 0)
+			setTimeout(function ():void
+			{
 				_parent.dispatchEvent(new Event("dead"));
+			},1);
 		}
 		
 		override public function disconnect():void 

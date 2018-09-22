@@ -39,17 +39,18 @@ package assets.components
 			if (_settings.solid || !( collisionList && collisionList.indexOf(e.collisionType) != -1))
 				return;
 			var position:Point = centerPoint(_parent);
-			if (e.object.width <= 0 || e.object.height <= 0)
-				return;
+			var isNormalise:Boolean = (e.object.width > 0 || e.object.height > 0);
 			var colliderPosition:Point = centerPoint(e.object);
 			position = new Point(position.x - colliderPosition.x, position.y - colliderPosition.y);
 			var limit:Number = Math.abs(e.object.height/e.object.width * position.x);
 			if ( -limit < position.y && position.y < limit){
-				_parent.x = e.object.x + ((position.x >= 0) ? e.object.width + 1 : -(_parent.width + 1));
+				if (isNormalise)
+					_parent.x = e.object.x + ((position.x >= 0) ? e.object.width + 1 : -(_parent.width + 1));
 				_parent.dispatchEvent(new MoveEvent(MoveEvent.REFLECT,false,false,Vector2.RIGHT));
 			}
 			else{
-				_parent.y = e.object.y + ((position.y >= 0) ? e.object.height + 1 : -(_parent.height + 1));
+				if (isNormalise)
+					_parent.y = e.object.y + ((position.y >= 0) ? e.object.height + 1 : -(_parent.height + 1));
 				_parent.dispatchEvent(new MoveEvent(MoveEvent.REFLECT,false,false,Vector2.UP));
 			}
 			

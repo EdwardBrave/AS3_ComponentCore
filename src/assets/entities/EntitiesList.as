@@ -7,7 +7,8 @@ package assets.entities
 	public class EntitiesList 
 	{
 		
-		TestEntity;
+		Block;
+		Ball;
 		
 	}
 

@@ -35,24 +35,21 @@ package assets.components
 		
 		protected function onCollision (e:CollisionEvent):void
 		{
-			if (_settings.solid)
+			var collisionList:Object = CollisionManager._collisionList[_settings.type];
+			if (_settings.solid || !( collisionList && collisionList.indexOf(e.collisionType) != -1))
 				return;
-			var position:Vector2 = Vector2.getVectorByPoints(centerPoint(_parent),centerPoint(e.object));
-			var angle:int = position.angle;
-			if (angle < 45 || angle >= 315){
-				_parent.x = e.object.x - _parent.width - 1;
-				_parent.dispatchEvent(new MoveEvent(MoveEvent.REFLECT,false,false,Vector2.RIGHT));
-			}
-			else if (angle < 135){
-				_parent.y = e.object.y + e.object.height + 1;
-				_parent.dispatchEvent(new MoveEvent(MoveEvent.REFLECT,false,false,Vector2.UP));
-			}
-			else if (angle < 225){
-				_parent.x = e.object.x + e.object.width + 1;
+			var position:Point = centerPoint(_parent);
+			if (e.object.width <= 0 || e.object.height <= 0)
+				return;
+			var colliderPosition:Point = centerPoint(e.object);
+			position = new Point(position.x - colliderPosition.x, position.y - colliderPosition.y);
+			var limit:Number = Math.abs(e.object.height/e.object.width * position.x);
+			if ( -limit < position.y && position.y < limit){
+				_parent.x = e.object.x + ((position.x >= 0) ? e.object.width + 1 : -(_parent.width + 1));
 				_parent.dispatchEvent(new MoveEvent(MoveEvent.REFLECT,false,false,Vector2.RIGHT));
 			}
 			else{
-				_parent.y = e.object.y - _parent.height -1;
+				_parent.y = e.object.y + ((position.y >= 0) ? e.object.height + 1 : -(_parent.height + 1));
 				_parent.dispatchEvent(new MoveEvent(MoveEvent.REFLECT,false,false,Vector2.UP));
 			}
 			

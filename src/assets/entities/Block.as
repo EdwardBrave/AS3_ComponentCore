@@ -6,13 +6,15 @@ package assets.entities
 	 * ...
 	 * @author EdwardBrave
 	 */
-	public class TestEntity extends Container 
+	public class Block extends Container 
 	{
 		
-		public function TestEntity() 
+		public function Block() 
 		{
 			super();
-			
+			_settings.color = 0x00FB00;
+			_settings.width = 50;
+			_settings.height = 50;
 		}
 		
 		override public function connect():void 
@@ -28,17 +30,11 @@ package assets.entities
 		
 		override public function initGraphics():void 
 		{
-			_settings.color = _settings.color || 0xFF8000;
 			graphics.beginFill(_settings.color);
-			graphics.drawRect(0, 0, 100, 100);
+			graphics.drawRect(0, 0, _settings.width, _settings.height);
 			graphics.endFill();
 		}
 		
-		override public function secondTick():void 
-		{
-			if (parent is Container)
-			trace((parent as Container).getComponentName(this));
-		}
 		
 	}
 

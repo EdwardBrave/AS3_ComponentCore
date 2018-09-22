@@ -97,35 +97,35 @@ package assets.components
 		{
 			if ((pressedKeys & _settings.activeKeys & 0x1) && e.keyCode == 87){
 				pressedKeys &= 0xEE;
-				_parent.dispatchEvent(new MoveEvent(MoveEvent.STOP,false,false,Vector2.UP));
+				setMoveVector();
 			}
 			else if ((pressedKeys & _settings.activeKeys & 0x2) && e.keyCode == 83){
 				pressedKeys &= 0xDD;
-				_parent.dispatchEvent(new MoveEvent(MoveEvent.STOP,false,false,Vector2.DOWN));
+				setMoveVector();
 			}
 			else if ((pressedKeys & _settings.activeKeys & 0x4) && e.keyCode == 65){
 				pressedKeys &= 0xBB;
-				_parent.dispatchEvent(new MoveEvent(MoveEvent.STOP,false,false,Vector2.LEFT));
+				setMoveVector();
 			}
 			else if ((pressedKeys & _settings.activeKeys & 0x8) && e.keyCode == 68){
 				pressedKeys &= 0x77;
-				_parent.dispatchEvent(new MoveEvent(MoveEvent.STOP,false,false,Vector2.RIGHT));
+				setMoveVector();
 			}
 			else if ((pressedKeys & _settings.activeKeys & 0x10) && e.keyCode == 38){
 				pressedKeys &= 0xEE;
-				_parent.dispatchEvent(new MoveEvent(MoveEvent.STOP,false,false,Vector2.UP));
+				setMoveVector();
 			}
 			else if ((pressedKeys & _settings.activeKeys & 0x20) && e.keyCode == 40){
 				pressedKeys &= 0xDD;
-				_parent.dispatchEvent(new MoveEvent(MoveEvent.STOP,false,false,Vector2.DOWN));
+				setMoveVector();
 			}
 			else if ((pressedKeys & _settings.activeKeys & 0x40) && e.keyCode == 37){
 				pressedKeys &= 0xBB;
-				_parent.dispatchEvent(new MoveEvent(MoveEvent.STOP,false,false,Vector2.LEFT));
+				setMoveVector();
 			}
 			else if ((pressedKeys & _settings.activeKeys & 0x80) && e.keyCode == 39){
 				pressedKeys &= 0x77;
-				_parent.dispatchEvent(new MoveEvent(MoveEvent.STOP,false,false,Vector2.RIGHT));
+				setMoveVector();
 			}
 		}
 		

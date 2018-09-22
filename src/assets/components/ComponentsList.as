@@ -14,7 +14,7 @@ package assets.components
 		Armed;
 		Health;
 		RangeCollider;
-		
+		GameController;	
 	}
 
 }

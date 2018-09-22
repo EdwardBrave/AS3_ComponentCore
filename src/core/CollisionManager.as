@@ -12,7 +12,7 @@ package core
 	{
 		private static var colliders:Vector.<Collider>;
 		
-		private static var _collisionList:Object;
+		public static var _collisionList:Object;
 		
 		/**
 		 * иницыализует коллизию
@@ -31,20 +31,20 @@ package core
 			if (colliders.length <= 1)
 				return;
 			
-			for (var count:int = colliders.length - 1; count >= 0; count--){
+			for (var count:String in colliders){
 				var currentType:Array = _collisionList[colliders[count].collisionType];
 				var currentCollider:Collider = colliders[count];
 				var currentColliderParent:DisplayObject = (currentCollider) ? currentCollider.getParent(): null;
 				if ( !currentType || !currentColliderParent){
-					colliders.removeAt(count);
+					colliders.removeAt(int (count));
 					continue;
 				}
-				for (var i:int = count - 1; i >= 0; i-- ){
+				for (var i:int = int(count) - 1; i >= 0; i-- ){
 					if (currentType.indexOf(colliders[i].collisionType) != -1)
 					{
 						var newCollider:Collider = colliders[i];
 						var newColliderParent:DisplayObject = (newCollider) ? newCollider.getParent(): null;
-						if (newColliderParent && currentColliderParent.hitTestObject(newColliderParent) && newColliderParent != currentColliderParent){
+						if (newColliderParent && newColliderParent != currentColliderParent && isIntersects(currentColliderParent,newColliderParent)){
 							if (colliders.indexOf(newCollider) != -1 && colliders.indexOf(currentCollider) != -1)
 								currentColliderParent.dispatchEvent(new CollisionEvent(CollisionEvent.COLLISION, false, false, newColliderParent,newCollider.collisionType));
 							if (colliders.indexOf(newCollider) != -1 && colliders.indexOf(currentCollider) != -1)
@@ -53,6 +53,14 @@ package core
 					}
 				}	
 			}
+		}
+		
+		private static function isIntersects(obj1:DisplayObject, obj2:DisplayObject):Boolean
+		{
+			if (!obj1.hitTestObject(obj2))
+				return false; 
+			//obj1.mask(obj2);
+			return true;
 		}
 		
 		public static function addCollider(collider:Collider):void

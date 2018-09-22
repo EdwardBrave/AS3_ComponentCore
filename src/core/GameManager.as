@@ -19,6 +19,9 @@ package core
 		{
 			EventManager.setStage(stage);
 			CollisionManager.init(collisionList);
+			stage.addEventListener(GameEvent.START, onGameStart);
+			stage.addEventListener(GameEvent.GAME_WIN, onGameWin);
+			stage.addEventListener(GameEvent.GAME_OVER, onGameLoose);
 		}
 		
 		public static function get currentRoom():int
@@ -66,6 +69,18 @@ package core
 		{
 			WindowManager.closeAll();
 			EntityManager.refreshMemory();
+		}
+		
+		private static function onGameStart(e:*):void{
+			trace("START");
+		}
+		
+		private static function onGameWin(e:*):void{
+			trace("WIN");
+		}
+		
+		private static function onGameLoose(e:*):void{
+			trace("LOOSE");
 		}
 		
 	}

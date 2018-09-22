@@ -2,6 +2,7 @@ package assets.components
 {
 	import assets.CollisionEvent;
 	import assets.MoveEvent;
+	import core.CollisionManager;
 	import core.utils.Vector2;
 	import flash.display.DisplayObject;
 	import flash.geom.Point;
@@ -19,28 +20,30 @@ package assets.components
 		
 		override protected function onCollision(e:CollisionEvent):void 
 		{
-			if (_settings.solid)
+			var collisionList:Object = CollisionManager._collisionList[_settings.type];
+			if (_settings.solid || !( collisionList && collisionList.indexOf(e.collisionType) != -1))
+				return;	
+			if (e.object.width <= 0 || e.object.height <= 0)
 				return;
-			var position:Vector2 = Vector2.getVectorByPoints(centerPoint(_parent),centerPoint(e.object));
-			var angle:int = position.angle;
-			if (angle < 45 || angle >= 315){	
-				angle = 100 + 160 * (centerPoint(_parent).y - (e.object.y - _parent.height / 2) ) / (_parent.height + e.object.height); 
-				_parent.x = e.object.x - _parent.width - 1;
-				_parent.dispatchEvent(new MoveEvent(MoveEvent.START_MOVE,false,false,Vector2.getAngleVector(angle)));
-			}
-			else if (angle < 135){
-				angle = 190 + 160 * (centerPoint(_parent).x - (e.object.x - _parent.width/2) )/(_parent.width + e.object.width); 
-				_parent.y = e.object.y + e.object.height + 1;
-				_parent.dispatchEvent(new MoveEvent(MoveEvent.START_MOVE,false,false,Vector2.getAngleVector(angle)));
-			}
-			else if (angle < 225){
-				angle = 280 + 160 * (1 - (centerPoint(_parent).y - (e.object.y - _parent.height / 2) ) / (_parent.height + e.object.height)); 
-				_parent.x = e.object.x + e.object.width + 1;
-				_parent.dispatchEvent(new MoveEvent(MoveEvent.START_MOVE,false,false,Vector2.getAngleVector(angle)));
+			var angle:int;
+			var position:Point = centerPoint(_parent);
+			var colliderPosition:Point = centerPoint(e.object);
+			position = new Point(position.x - colliderPosition.x, position.y - colliderPosition.y);
+			var limit:Number = Math.abs(e.object.height/e.object.width * position.x);
+			if ( -limit < position.y && position.y < limit){
+				_parent.x = e.object.x + ((position.x >= 0) ? e.object.width + 1 : -(_parent.width + 1));
+				if (position.x >= 0)
+					angle = 280 + 160 * (1 - (centerPoint(_parent).y - (e.object.y - _parent.height / 2) ) / (_parent.height + e.object.height));
+				else
+					angle = 100 + 160 * (centerPoint(_parent).y - (e.object.y - _parent.height / 2) ) / (_parent.height + e.object.height); 	
+				_parent.dispatchEvent(new MoveEvent(MoveEvent.START_MOVE, false, false, Vector2.getAngleVector(angle)));
 			}
 			else{
-				angle = 10 + 160 * (1 - (centerPoint(_parent).x - (e.object.x - _parent.width/2) )/(_parent.width + e.object.width)); 
-				_parent.y = e.object.y - _parent.height -1;
+				_parent.y = e.object.y + ((position.y >= 0) ? e.object.height + 1 : -(_parent.height + 1));
+				if (position.y >= 0)
+					angle = 190 + 160 * (centerPoint(_parent).x - (e.object.x - _parent.width/2) )/(_parent.width + e.object.width); 
+				else
+					angle = 10 + 160 * (1 - (centerPoint(_parent).x - (e.object.x - _parent.width/2) )/(_parent.width + e.object.width)); 
 				_parent.dispatchEvent(new MoveEvent(MoveEvent.START_MOVE,false,false,Vector2.getAngleVector(angle)));
 			}
 			

@@ -1,6 +1,8 @@
 package assets.components 
 {
 	import assets.MoveEvent;
+	import core.EventManager;
+	import core.GameEvent;
 	import core.base.Component;
 	import core.utils.Vector2;
 	import flash.display.DisplayObject;
@@ -25,14 +27,16 @@ package assets.components
 			_parent.addEventListener(MoveEvent.START_MOVE, onStartMove);
 			_parent.addEventListener(MoveEvent.REFLECT,onReflect);
 			if (!_settings.isContinue)
-				_parent.addEventListener(MoveEvent.STOP,onStop);
+				_parent.addEventListener(MoveEvent.STOP, onStop);
+			EventManager.stage.addEventListener(GameEvent.GAME_WIN, onStop);
 		}
 		
 		override public function disconnect():void 
 		{
 			_parent.removeEventListener(MoveEvent.START_MOVE, onStartMove);
 			_parent.removeEventListener(MoveEvent.REFLECT,onReflect);
-			_parent.removeEventListener(MoveEvent.STOP,onStop);
+			_parent.removeEventListener(MoveEvent.STOP, onStop);
+			EventManager.stage.removeEventListener(GameEvent.GAME_WIN, onStop);
 		}
 		
 		private function onStartMove(e:MoveEvent):void
@@ -52,7 +56,7 @@ package assets.components
 				_movement = Vector2.NULL;
 		}
 		
-		private function onStop(e:MoveEvent):void
+		private function onStop(e:*):void
 		{
 			_movement = Vector2.NULL;
 		}

@@ -6,7 +6,8 @@ package assets.guiEntities
 	 */
 	public class GuiEntitiesList 
 	{
-		
+		Button;
+		Label;
 		
 	}
 

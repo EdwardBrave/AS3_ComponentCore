@@ -49,7 +49,6 @@ package core.base
 			if (_components[name])
 				throw new Error("Component \"" + name+"\" is already defined.", 1038);
 			_components[name] = component;
-			component.setParent(this);
 			return this;
 		}
 		

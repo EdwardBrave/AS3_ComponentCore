@@ -31,6 +31,7 @@ package core
 		
 		public static function loadGameRoom(roomID:uint,startOnLoad:Boolean = true):void
 		{
+			refreshMemory();
 			var gameRoom:Object = Data.gameRooms[roomID];
 			for (var field:int = 0; field < gameRoom.fields.length; field++)
 			{
@@ -62,7 +63,6 @@ package core
 					layout.addChild(newEntity as DisplayObject);
 				}
 			}
-			refreshMemory();
 		}
 		
 		public static function refreshMemory():void
